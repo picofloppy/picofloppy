@@ -127,9 +127,7 @@
     font-size: 1em;
   }
 }
-  transition: opacity 0.5s;
-  padding: 0;
-}
+
 .dos-spoof-content {
   background: transparent;
   padding: 2em 3em;
@@ -226,7 +224,7 @@ body {
     font-size: 15px;
   }
 }
-}
+
 
 .picofloppy-main {
   width: 100%;

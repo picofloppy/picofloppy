@@ -20,11 +20,11 @@ function App() {
     'Detecting water in floppy drive...',
     'Warning: Water detected! Initiating cleanup...',
     'Spinning up floppy drive...',
-    'Cleaning in progress... █▒▒▒▒▒▒▒▒▒',
-    'Cleaning in progress... ███▒▒▒▒▒▒▒',
-    'Cleaning in progress... █████▒▒▒▒▒',
-    'Cleaning in progress... ███████▒▒▒',
-    'Cleaning in progress... ██████████',
+    'Spin in progress... █▒▒▒▒▒▒▒▒▒',
+    'Spin in progress... ███▒▒▒▒▒▒▒',
+    'Spin in progress... █████▒▒▒▒▒',
+    'Spin in progress... ███████▒▒▒',
+    'Spin in progress... ██████████',
     'All clear! No water detected.',
     'Press any key to continue...'
   ];
@@ -43,7 +43,7 @@ function App() {
       spinAudio.play();
       window._spinAudio = spinAudio;
     }
-    // Stop sound after cleaning complete (step 8)
+    // Stop sound after Spin complete (step 8)
     if (showDosSpoof && dosStep === 8 && window._spinAudio) {
       window._spinAudio.pause();
       window._spinAudio.currentTime = 0;
