@@ -1,3 +1,33 @@
+/* DOS Spoof Overlay */
+.dos-spoof-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  color: #00ff00;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 2em;
+  transition: opacity 0.5s;
+}
+.dos-spoof-content {
+  background: transparent;
+  padding: 2em 3em;
+  border-radius: 8px;
+  box-shadow: none;
+}
+.dos-spoof-content pre {
+  margin: 0;
+  color: #00ff00;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+}
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
   background: #f3f3f3;

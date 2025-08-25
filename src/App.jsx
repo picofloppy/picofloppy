@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import floppySoundFile from './assets/floppy-sound.mp3';
+import spinSoundFile from './assets/spin-sound.mp3';
 import './App.css';
 import Support from './Support';
 
@@ -10,9 +11,68 @@ function playFloppySound() {
 
 function App() {
   const [page, setPage] = useState('home');
+  const [showDosSpoof, setShowDosSpoof] = useState(false);
+  const [dosStep, setDosStep] = useState(0);
+
+  // DOS spoof steps
+  const dosSteps = [
+    'A:\\> drain',
+    'Detecting water in floppy drive...',
+    'Warning: Water detected! Initiating cleanup...',
+    'Spinning up floppy drive...',
+    'Cleaning in progress... █▒▒▒▒▒▒▒▒▒',
+    'Cleaning in progress... ███▒▒▒▒▒▒▒',
+    'Cleaning in progress... █████▒▒▒▒▒',
+    'Cleaning in progress... ███████▒▒▒',
+    'Cleaning in progress... ██████████',
+    'All clear! No water detected.',
+    'Press any key to continue...'
+  ];
+
+  // Play and stop spin sound at appropriate steps
+  React.useEffect(() => {
+    let spinAudio;
+    if (showDosSpoof && dosStep === 3) {
+      spinAudio = new window.Audio(spinSoundFile);
+      spinAudio.loop = true;
+      spinAudio.play();
+      window._spinAudio = spinAudio;
+    }
+    // Stop sound after cleaning complete (step 8)
+    if (showDosSpoof && dosStep === 8 && window._spinAudio) {
+      window._spinAudio.pause();
+      window._spinAudio.currentTime = 0;
+      window._spinAudio = null;
+    }
+    if (showDosSpoof && dosStep < dosSteps.length - 1) {
+      const timer = setTimeout(() => setDosStep(dosStep + 1), 1200);
+      return () => clearTimeout(timer);
+    }
+  }, [showDosSpoof, dosStep]);
+
+  // Handle key press to exit spoof
+  React.useEffect(() => {
+    if (showDosSpoof && dosStep === dosSteps.length - 1) {
+      const handleKey = () => {
+        setShowDosSpoof(false);
+        setDosStep(0);
+        setTimeout(() => setPage('home'), 1200);
+      };
+      window.addEventListener('keydown', handleKey);
+      return () => window.removeEventListener('keydown', handleKey);
+    }
+  }, [showDosSpoof, dosStep]);
+
   if (page === 'support') return <Support />;
   return (
     <div className="picofloppy-main">
+      {showDosSpoof && (
+        <div className="dos-spoof-overlay">
+          <div className="dos-spoof-content">
+            <pre>{dosSteps[dosStep]}</pre>
+          </div>
+        </div>
+      )}
       <nav className="picofloppy-nav">
         <div className="picofloppy-logo">
           <span className="logo-square red"></span>
@@ -25,7 +85,7 @@ function App() {
           <li><a href="#products">Trollducts</a></li>
           <li><a href="#download" onClick={e => { e.preventDefault(); playFloppySound(); }}>Download FloppyOS 95</a></li>
           <li><a href="#support" onClick={e => { e.preventDefault(); setPage('support'); }}>Support</a></li>
-          <li><a href="#about">Why?</a></li>
+          <li><a href="#chkdsk" onClick={e => { e.preventDefault(); setShowDosSpoof(true); setDosStep(0); }}>CHKDSK</a></li>
         </ul>
       </nav>
       <header className="picofloppy-hero">
