@@ -78,7 +78,8 @@ function App() {
         </div>
       </section>
       <footer className="picofloppy-footer">
-        <p>© 2025 Picofloppy. Not affiliated with Microsoft. All rights reserved to the Floppyverse.<br />
+        <p>© 2025 Picofloppy.<br /> Not affiliated with Microsoft or Macrohard, we are not not big or hard enough. <br />
+        All rights reserved to the Floppyverse.<br />
         If you read this, you probably need a hobby.<br />
         Powered by 100% recycled memes.</p>
       </footer>
