@@ -34,7 +34,7 @@ export default function Support() {
         <li><strong>User Session:</strong> You are finally ready to use your computer. You immediately click "Restart" by accident.</li>
       </ol>
       <p><strong>Please read every word above before calling support. There will be a quiz.</strong></p>
-      <p>If your computer is still not working, just try to <span style={{color: '#0078d4', fontWeight: 'bold'}}>reboot reboot</span> (yes, reboot reboot) and see if that helps.</p>
+      <p>If your computer is still not working, just try the <span style={{color: '#0078d4', fontWeight: 'bold'}}>Vulcan death grip (Alt+Ctrl+Delete)</span> and see if that helps.</p>
     </div>
   );
 }

@@ -7,6 +7,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
 }
 
 .picofloppy-main {
@@ -73,12 +74,20 @@ body {
 }
 
 .picofloppy-hero {
-  background: linear-gradient(90deg, #0078d4 60%, #f25022 100%);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #0078d4;
   color: #fff;
   padding: 2.5rem 0 1.5rem 0;
   text-align: center;
   border-radius: 12px 12px 0 0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .picofloppy-hero h1 {
   font-size: 2.8em;
@@ -190,13 +199,16 @@ body {
 }
 
 .picofloppy-footer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto 0 auto;
   background: #0078d4;
   color: #fff;
   text-align: center;
   padding: 2rem 0 1rem 0;
-  margin-top: 2rem;
   border-radius: 0 0 12px 12px;
   font-size: 1.1em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 .picofloppy-footer p {
   margin: 0;
@@ -207,21 +219,25 @@ body {
   background: #fff;
   padding: 3rem 2rem;
   margin: 2rem auto;
-  max-width: 700px;
+  max-width: 900px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
   font-family: 'Segoe UI', Arial, sans-serif;
   color: #222;
+  font-size: 1.15em;
+  line-height: 1.7;
 }
 .picofloppy-support h1 {
   color: #0078d4;
-  font-size: 2em;
-  margin-bottom: 1rem;
+  font-size: 2.2em;
+  margin-bottom: 1.2rem;
+  font-weight: 700;
 }
 .picofloppy-support h2 {
   color: #f25022;
-  font-size: 1.3em;
-  margin-bottom: 1rem;
+  font-size: 1.4em;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
 }
 .picofloppy-support ol {
   margin-left: 1.5em;
@@ -229,14 +245,14 @@ body {
   font-size: 1.08em;
 }
 .picofloppy-support li {
-  margin-bottom: 1em;
+  margin-bottom: 1.2em;
   color: #222;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 .picofloppy-support p {
-  font-size: 1.1em;
+  font-size: 1.15em;
   color: #444;
-  margin-bottom: 1em;
+  margin-bottom: 1.2em;
 }
 .picofloppy-support strong {
   color: #0078d4;
@@ -265,8 +281,19 @@ body {
   .picofloppy-logo {
     margin-right: 1em;
   }
+  .picofloppy-hero {
+    max-width: 98vw;
+    border-radius: 8px 8px 0 0;
+    padding: 1.2rem 0 1rem 0;
+    font-size: 0.95em;
+  }
+  .picofloppy-footer {
+    max-width: 98vw;
+    border-radius: 0 0 8px 8px;
+    padding: 1.2rem 0 0.8rem 0;
+    font-size: 1em;
+  }
 }
-
 @media (max-width: 600px) {
   .picofloppy-main {
     max-width: 100vw;
@@ -285,12 +312,29 @@ body {
     margin-right: 0;
   }
   .picofloppy-hero {
-    padding: 1.2rem 0 1rem 0;
-    font-size: 0.95em;
+    max-width: 100vw;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 1rem 0 0.5rem 0;
+    font-size: 0.9em;
   }
   .product-list, .testimonial-list, .gallery-list {
     flex-direction: column;
     align-items: center;
     gap: 0.8rem;
+  }
+  .picofloppy-footer {
+    max-width: 100vw;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 1rem 0 0.5rem 0;
+    font-size: 0.95em;
+  }
+}
+@media (max-width: 700px) {
+  .picofloppy-support {
+    padding: 1.5rem 0.5rem;
+    max-width: 98vw;
+    font-size: 1em;
   }
 }
