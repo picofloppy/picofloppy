@@ -1,3 +1,152 @@
+/* General responsive improvements */
+@media (max-width: 900px) {
+  .picofloppy-main {
+    max-width: 100vw;
+    margin: 0.5rem;
+    border-radius: 8px;
+    padding-bottom: 1rem;
+  }
+  .picofloppy-nav {
+    max-width: 100vw;
+    padding: 1rem 0.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .picofloppy-logo {
+    min-width: 120px;
+    margin-bottom: 0.5em;
+  }
+  .picofloppy-nav ul {
+    gap: 1em;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .picofloppy-hero {
+    max-width: 100vw;
+    border-radius: 8px 8px 0 0;
+    padding: 1.2rem 0 1rem 0;
+    font-size: 0.95em;
+  }
+  .picofloppy-hero img {
+    width: 80px !important;
+    max-width: 30vw;
+  }
+  .picofloppy-footer {
+    max-width: 100vw;
+    border-radius: 0 0 8px 8px;
+    padding: 1.2rem 0 0.8rem 0;
+    font-size: 1em;
+  }
+  .product-list, .gallery-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+  }
+  .product-card, .gallery-card {
+    width: 90vw;
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 600px) {
+  .picofloppy-main {
+    max-width: 100vw;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding-bottom: 0.5rem;
+  }
+  .picofloppy-nav {
+    max-width: 100vw;
+    padding: 0.5rem 0.2rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .picofloppy-logo {
+    margin-bottom: 0.5em;
+    min-width: 0;
+  }
+  .picofloppy-nav ul {
+    flex-direction: column;
+    gap: 0.5em;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .picofloppy-hero {
+    max-width: 100vw;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 1rem 0 0.5rem 0;
+    font-size: 0.9em;
+  }
+  .picofloppy-hero img {
+    width: 60px !important;
+    max-width: 40vw;
+  }
+  .product-list, .gallery-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .product-card, .gallery-card {
+    width: 98vw;
+    max-width: 98vw;
+  }
+  .picofloppy-footer {
+    max-width: 100vw;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 1rem 0 0.5rem 0;
+    font-size: 0.95em;
+  }
+}
+.dos-spoof-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  color: #00ff00;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 2em;
+  transition: opacity 0.5s;
+  padding: 0;
+}
+.dos-spoof-content {
+  background: transparent;
+  padding: 2em 3em;
+  border-radius: 8px;
+  box-shadow: none;
+  max-width: 90vw;
+  word-break: break-word;
+}
+.dos-spoof-content pre {
+  margin: 0;
+  color: #00ff00;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 600px) {
+  .dos-spoof-overlay {
+    font-size: 1em;
+    padding: 0;
+  }
+  .dos-spoof-content {
+    padding: 1em 0.5em;
+    max-width: 98vw;
+    border-radius: 4px;
+  }
+}
 /* DOS Spoof Overlay */
 .dos-spoof-overlay {
   position: fixed;
