@@ -31,9 +31,14 @@ function App() {
 
   // Play and stop spin sound at appropriate steps
   React.useEffect(() => {
-    let spinAudio;
+    // Always stop previous spin sound before starting a new one
     if (showDosSpoof && dosStep === 3) {
-      spinAudio = new window.Audio(spinSoundFile);
+      if (window._spinAudio) {
+        window._spinAudio.pause();
+        window._spinAudio.currentTime = 0;
+        window._spinAudio = null;
+      }
+      const spinAudio = new window.Audio(spinSoundFile);
       spinAudio.loop = true;
       spinAudio.play();
       window._spinAudio = spinAudio;
@@ -50,7 +55,7 @@ function App() {
     }
   }, [showDosSpoof, dosStep]);
 
-  // Handle key press to exit spoof
+  // Handle key press or auto-exit after 3 seconds on 'Press any key to continue...' step
   React.useEffect(() => {
     if (showDosSpoof && dosStep === dosSteps.length - 1) {
       const handleKey = () => {
@@ -59,7 +64,15 @@ function App() {
         setTimeout(() => setPage('home'), 1200);
       };
       window.addEventListener('keydown', handleKey);
-      return () => window.removeEventListener('keydown', handleKey);
+      const autoTimer = setTimeout(() => {
+        setShowDosSpoof(false);
+        setDosStep(0);
+        setTimeout(() => setPage('home'), 1200);
+      }, 3000);
+      return () => {
+        window.removeEventListener('keydown', handleKey);
+        clearTimeout(autoTimer);
+      };
     }
   }, [showDosSpoof, dosStep]);
 
