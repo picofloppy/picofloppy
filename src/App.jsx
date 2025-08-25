@@ -50,7 +50,7 @@ function App() {
     }
   }, [showDosSpoof, dosStep]);
 
-  // Handle key press to exit spoof
+  // Handle key press or auto-exit after 3 seconds
   React.useEffect(() => {
     if (showDosSpoof && dosStep === dosSteps.length - 1) {
       const handleKey = () => {
@@ -59,7 +59,15 @@ function App() {
         setTimeout(() => setPage('home'), 1200);
       };
       window.addEventListener('keydown', handleKey);
-      return () => window.removeEventListener('keydown', handleKey);
+      const autoTimer = setTimeout(() => {
+        setShowDosSpoof(false);
+        setDosStep(0);
+        setTimeout(() => setPage('home'), 1200);
+      }, 3000);
+      return () => {
+        window.removeEventListener('keydown', handleKey);
+        clearTimeout(autoTimer);
+      };
     }
   }, [showDosSpoof, dosStep]);
 

@@ -116,6 +116,17 @@
   justify-content: center;
   font-family: 'Consolas', 'Courier New', monospace;
   font-size: 2em;
+}
+@media (max-width: 900px) {
+  .dos-spoof-overlay {
+    font-size: 1.3em;
+  }
+}
+@media (max-width: 600px) {
+  .dos-spoof-overlay {
+    font-size: 1em;
+  }
+}
   transition: opacity 0.5s;
   padding: 0;
 }
@@ -187,6 +198,18 @@ body {
   flex-direction: column;
   align-items: center;
   overflow-x: hidden;
+  font-size: 18px;
+}
+@media (max-width: 900px) {
+  body {
+    font-size: 16px;
+  }
+}
+@media (max-width: 600px) {
+  body {
+    font-size: 15px;
+  }
+}
 }
 
 .picofloppy-main {
