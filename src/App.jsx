@@ -13,6 +13,8 @@ function App() {
   const [page, setPage] = useState('home');
   const [showDosSpoof, setShowDosSpoof] = useState(false);
   const [dosStep, setDosStep] = useState(0);
+  const [showBSOD, setShowBSOD] = useState(false);
+  const [showCookieBanner, setShowCookieBanner] = useState(true);
 
   // DOS spoof steps
   const dosSteps = [
@@ -79,11 +81,38 @@ function App() {
   if (page === 'support') return <Support />;
   return (
     <div className="picofloppy-main">
+      {/* Blue Screen of Death Easter Egg */}
+      {showBSOD && (
+        <div className="bsod-overlay" onClick={() => setShowBSOD(false)}>
+          <div className="bsod-content">
+            <pre>{`Windows
+A fatal exception 0E has occurred at 0028:C0011E36 in VXD VMM(01) +
+00010E36. The current application will be terminated.
+
+* Press any key to terminate the current application.
+* Press CTRL+ALT+DEL again to restart your computer. You will
+  lose any unsaved information in all applications.
+
+                    Press any key to continue _`}</pre>
+          </div>
+        </div>
+      )}
       {showDosSpoof && (
         <div className="dos-spoof-overlay">
           <div className="dos-spoof-content">
             <pre>{dosSteps[dosStep]}</pre>
           </div>
+        </div>
+      )}
+      {/* Cookie Consent Parody */}
+      {showCookieBanner && (
+        <div className="cookie-banner">
+          <p>
+            🍪 This website uses floppy disks to store your preferences. 
+            By continuing, you agree to let us fill your A:\ drive with absolutely nothing useful.
+          </p>
+          <button onClick={() => setShowCookieBanner(false)}>Accept (Like You Have a Choice)</button>
+          <button onClick={() => setShowCookieBanner(false)}>Decline (Just Kidding, This Does Nothing)</button>
         </div>
       )}
       <nav className="picofloppy-nav">
@@ -99,6 +128,7 @@ function App() {
           <li><a href="#download" onClick={e => { e.preventDefault(); playFloppySound(); }}>Download FloppyOS 95</a></li>
           <li><a href="#support" onClick={e => { e.preventDefault(); setPage('support'); }}>Support</a></li>
           <li><a href="#chkdsk" onClick={e => { e.preventDefault(); setShowDosSpoof(true); setDosStep(0); }}>CHKDSK</a></li>
+          <li><a href="#bsod" onClick={e => { e.preventDefault(); setShowBSOD(true); }}>BSOD</a></li>
         </ul>
       </nav>
       <header className="picofloppy-hero">
@@ -131,6 +161,55 @@ function App() {
             <h3>FloppyGPT</h3>
             <p>AI that only answers in floppy disk noises. Useful? Not really.</p>
           </div>
+          <div className="product-card">
+            <h3>Internet Flopplorer 4.0</h3>
+            <p>Browse the web at 56k speeds! Takes 20 minutes to load Google. Comes with bonzi buddy.</p>
+          </div>
+          <div className="product-card">
+            <h3>FloppyDefender</h3>
+            <p>Antivirus that only detects viruses from 1995. Perfect for modern threats!</p>
+          </div>
+          <div className="product-card">
+            <h3>Floppy Media Player</h3>
+            <p>Play your entire MP3 collection! (Max 1 song per floppy disk)</p>
+          </div>
+        </div>
+      </section>
+      <section className="picofloppy-requirements">
+        <h2>System Requirements</h2>
+        <div className="requirements-box">
+          <h3>Minimum Requirements:</h3>
+          <ul>
+            <li>Intel 486DX processor or equivalent potato</li>
+            <li>8 MB of RAM (16 MB recommended for multitasking, like running Notepad AND Calculator)</li>
+            <li>50 MB of hard disk space (we're generous)</li>
+            <li>VGA graphics card (256 colors! Living the dream!)</li>
+            <li>3.5" floppy disk drive (obviously)</li>
+            <li>Sound Blaster 16 or compatible (for those sweet MIDI sounds)</li>
+            <li>MS-DOS 6.22 or higher</li>
+            <li>A sense of humor (non-negotiable)</li>
+          </ul>
+        </div>
+      </section>
+      <section className="picofloppy-testimonials">
+        <h2>What Our Users Say</h2>
+        <div className="testimonial-list">
+          <div className="testimonial-card">
+            <p>"I tried to install FloppyOS 95 and it asked for disk 47 of 200. I only have 3 floppy disks."</p>
+            <span>— Steve, IT Support</span>
+          </div>
+          <div className="testimonial-card">
+            <p>"FloppyCloud deleted all my files and replaced them with low-res clipart. 10/10 would use again."</p>
+            <span>— Karen, Accountant</span>
+          </div>
+          <div className="testimonial-card">
+            <p>"I asked FloppyGPT for help with my code. It made floppy noises for 3 hours. More useful than Stack Overflow."</p>
+            <span>— Dev, Software Engineer</span>
+          </div>
+          <div className="testimonial-card">
+            <p>"My computer now only boots if I insert a floppy disk. Send help. Or more floppy disks."</p>
+            <span>— Anonymous</span>
+          </div>
         </div>
       </section>
       <section className="picofloppy-retro-gallery">
@@ -147,6 +226,18 @@ function App() {
           <div className="gallery-card">
             <img src="/floppy.png" alt="8 inch floppy" />
             <p>"When your storage was bigger than your computer."</p>
+          </div>
+          <div className="gallery-card">
+            <img src="/floppy.png" alt="floppy disk collection" />
+            <p>"My entire game collection: Doom (12 disks), Windows 95 (13 disks), and that one demo from PC Gamer."</p>
+          </div>
+          <div className="gallery-card">
+            <img src="/floppy.png" alt="corrupted floppy" />
+            <p>"Disk read error on disk 39 of 40. Starting over."</p>
+          </div>
+          <div className="gallery-card">
+            <img src="/floppy.png" alt="floppy magnets" />
+            <p>"Keep away from magnets. And speakers. And other floppy disks. And Wednesdays."</p>
           </div>
         </div>
       </section>

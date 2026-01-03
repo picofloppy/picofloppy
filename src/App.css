@@ -579,3 +579,203 @@ body {
     font-size: 1em;
   }
 }
+
+/* Blue Screen of Death */
+.bsod-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0000aa;
+  color: #fff;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Consolas', 'Courier New', monospace;
+  cursor: pointer;
+}
+.bsod-content {
+  background: transparent;
+  padding: 2em 3em;
+  max-width: 90vw;
+}
+.bsod-content pre {
+  margin: 0;
+  color: #fff;
+  background: transparent;
+  font-family: inherit;
+  font-size: 1.2em;
+  white-space: pre-wrap;
+  line-height: 1.4;
+}
+@media (max-width: 700px) {
+  .bsod-content {
+    padding: 1em 0.5em;
+    max-width: 98vw;
+  }
+  .bsod-content pre {
+    font-size: 0.85em;
+  }
+}
+
+/* Cookie Banner */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #222;
+  color: #fff;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  z-index: 1000;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+  flex-wrap: wrap;
+}
+.cookie-banner p {
+  margin: 0;
+  font-size: 1em;
+  flex: 1;
+  min-width: 300px;
+}
+.cookie-banner button {
+  background: #0078d4;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.6em 1.2em;
+  font-size: 0.95em;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.cookie-banner button:hover {
+  background: #005a9e;
+}
+.cookie-banner button:last-child {
+  background: #444;
+}
+.cookie-banner button:last-child:hover {
+  background: #666;
+}
+@media (max-width: 700px) {
+  .cookie-banner {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .cookie-banner p {
+    font-size: 0.9em;
+    min-width: 0;
+  }
+  .cookie-banner button {
+    width: 100%;
+    margin-top: 0.5em;
+  }
+}
+
+/* System Requirements */
+.picofloppy-requirements {
+  background: #fff;
+  margin: 2rem auto;
+  padding: 2.2rem;
+  max-width: 900px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.picofloppy-requirements h2 {
+  color: #0078d4;
+  font-size: 1.7em;
+  margin-bottom: 1em;
+}
+.requirements-box {
+  background: #f9f9f9;
+  border-left: 4px solid #f25022;
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+.requirements-box h3 {
+  color: #f25022;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+.requirements-box ul {
+  list-style: none;
+  padding-left: 0;
+}
+.requirements-box li {
+  padding: 0.5em 0;
+  color: #222;
+  font-size: 1.05em;
+  position: relative;
+  padding-left: 1.5em;
+}
+.requirements-box li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #7fba00;
+  font-weight: bold;
+}
+
+/* Testimonials */
+.picofloppy-testimonials {
+  background: #fff;
+  margin: 2rem auto;
+  padding: 2.2rem;
+  max-width: 900px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.picofloppy-testimonials h2 {
+  color: #0078d4;
+  font-size: 1.7em;
+  margin-bottom: 1em;
+  text-align: center;
+}
+.testimonial-list {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.testimonial-card {
+  background: #fffbe6;
+  border-left: 4px solid #ffb900;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 1.2rem;
+  width: 280px;
+  position: relative;
+}
+.testimonial-card p {
+  color: #222;
+  font-size: 1.05em;
+  font-style: italic;
+  margin: 0 0 1em 0;
+  line-height: 1.6;
+}
+.testimonial-card span {
+  color: #666;
+  font-size: 0.95em;
+  font-weight: 600;
+  display: block;
+  text-align: right;
+}
+@media (max-width: 900px) {
+  .testimonial-card {
+    width: 90vw;
+    max-width: 320px;
+  }
+}
+@media (max-width: 600px) {
+  .testimonial-card {
+    width: 98vw;
+    max-width: 98vw;
+  }
+}
