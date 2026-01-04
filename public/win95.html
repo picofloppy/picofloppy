@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Windows 95</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #008080;
+        }
+        #screen_container {
+            width: 100%;
+            height: 100%;
+        }
+        #status {
+            color: white;
+            padding: 20px;
+            font-family: monospace;
+            font-size: 18px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="status">Loading...</div>
+    <div id="screen_container"></div>
+    
+    <script>
+        document.getElementById("status").innerHTML = "Step 1: Basic JS works<br>";
+        
+        var script = document.createElement('script');
+        script.src = 'https://copy.sh/v86/v86.js';
+        script.onload = function() {
+            document.getElementById("status").innerHTML += "Step 2: Script loaded!<br>";
+            document.getElementById("status").innerHTML += "V86 exists = " + (typeof V86 !== 'undefined') + "<br>";
+            
+            if (typeof V86 !== 'undefined') {
+                initEmulator();
+            }
+        };
+        script.onerror = function(e) {
+            document.getElementById("status").innerHTML += "<span style='color:red'>ERROR loading script: " + e + "</span><br>";
+        };
+        document.head.appendChild(script);
+        
+        function initEmulator() {
+            var status = document.getElementById("status");
+            try {
+                status.innerHTML += "Creating emulator...<br>";
+                var emulator = new V86({
+                    wasm_path: "https://copy.sh/v86/v86.wasm",
+                    memory_size: 128 * 1024 * 1024,
+                    vga_memory_size: 8 * 1024 * 1024,
+                    screen_container: document.getElementById("screen_container"),
+                    bios: {
+                        url: "https://copy.sh/v86/bios/seabios.bin",
+                    },
+                    vga_bios: {
+                        url: "https://copy.sh/v86/bios/vgabios.bin",
+                    },
+                    hda: {
+                        url: "https://copy.sh/v86/images/windows95.img",
+                        async: true,
+                        size: 242049024,
+                    },
+                    boot_order: 0x132,
+                    autostart: true,
+                });
+                
+                status.innerHTML += "Emulator created!<br>";
+
+                emulator.add_listener("emulator-started", function() {
+                    status.innerHTML += "Emulator started!<br>";
+                    setTimeout(function() {
+                        status.style.display = 'none';
+                        var canvas = document.querySelector("canvas");
+                        if (canvas && canvas.requestFullscreen) {
+                            canvas.requestFullscreen().catch(err => {
+                                console.log("Fullscreen failed:", err);
+                            });
+                        }
+                    }, 2000);
+                });
+            } catch(e) {
+                status.innerHTML += "<span style='color:red'>ERROR: " + e.message + "</span><br>";
+            }
+        }
+    </script>
+
+        // Listen for ESC key or fullscreen exit
+        document.addEventListener('fullscreenchange', function() {
+            if (!document.fullscreenElement) {
+                window.parent.postMessage('exitWin95', '*');
+            }
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !document.fullscreenElement) {
+                window.parent.postMessage('exitWin95', '*');
+            }
+        });
+    </script>
+</body>
+</html>

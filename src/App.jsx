@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import floppySoundFile from './assets/floppy-sound.mp3';
 import spinSoundFile from './assets/spin-sound.mp3';
 import './App.css';
@@ -13,8 +13,12 @@ function App() {
   const [page, setPage] = useState('home');
   const [showDosSpoof, setShowDosSpoof] = useState(false);
   const [dosStep, setDosStep] = useState(0);
+  const [showWin95, setShowWin95] = useState(false); // Controls Floppy Bird emulator overlay
   const [showBSOD, setShowBSOD] = useState(false);
   const [showCookieBanner, setShowCookieBanner] = useState(true);
+  const screenContainerRef = useRef(null); // Container for v86 emulator canvas
+  const emulatorRef = useRef(null); // v86 emulator instance
+  const [emulatorStatus, setEmulatorStatus] = useState(''); // Loading status message
 
   // DOS spoof steps
   const dosSteps = [
@@ -57,6 +61,126 @@ function App() {
     }
   }, [showDosSpoof, dosStep]);
 
+  // Load v86 library and initialize Floppy Bird emulator when overlay is shown
+  useEffect(() => {
+    if (showWin95 && !window.V86) {
+      setEmulatorStatus('Loading v86 emulator...');
+      const script = document.createElement('script');
+      script.src = '/v86/build/libv86.js';
+      script.async = true;
+      script.onload = () => {
+        setEmulatorStatus('v86 loaded, initializing...');
+        if (screenContainerRef.current && !emulatorRef.current && window.V86) {
+          try {
+            setEmulatorStatus('Creating V86 instance...');
+            
+            // Create v86 emulator instance with Floppy Bird disk image
+            emulatorRef.current = new window.V86({
+              wasm_path: "/v86/build/v86.wasm",
+              memory_size: 16 * 1024 * 1024, // 16MB RAM
+              vga_memory_size: 8 * 1024 * 1024, // 8MB VGA memory for graphics
+              screen_container: screenContainerRef.current,
+              bios: {
+                url: "/v86/bios/seabios.bin",
+              },
+              vga_bios: {
+                url: "/v86/bios/vgabios.bin",
+              },
+              fda: {
+                url: "/v86/images/floppybird.img", // Bootable floppy disk image
+                async: false,
+              },
+              boot_order: 0x1, // Boot from floppy only (1 = floppy, 2 = hdd, 3 = cdrom)
+              autostart: true,
+              disable_keyboard: false,
+              disable_mouse: false,
+            });
+
+            setEmulatorStatus('Booting Floppy Bird from floppy disk...');
+
+            // Hide status message after 2 seconds so we can see the game
+            setTimeout(() => {
+              setEmulatorStatus('');
+            }, 2000);
+
+            // Debug: Check for canvas and focus it for keyboard input
+            setTimeout(() => {
+              const canvas = screenContainerRef.current?.querySelector("canvas");
+              if (canvas) {
+                console.log('Canvas found:', canvas);
+                console.log('Canvas dimensions:', canvas.width, 'x', canvas.height);
+                console.log('Canvas display:', window.getComputedStyle(canvas).display);
+                // Give canvas focus so it can receive keyboard input
+                canvas.focus();
+                canvas.click();
+              } else {
+                setEmulatorStatus('ERROR: Canvas not created');
+              }
+            }, 1000);
+
+            // Periodically check if canvas is ready and auto-hide status
+            const checkCanvas = setInterval(() => {
+              const canvas = screenContainerRef.current?.querySelector("canvas");
+              if (canvas && canvas.width > 0) {
+                setEmulatorStatus('');
+                canvas.focus();
+                clearInterval(checkCanvas);
+              }
+            }, 500);
+
+            emulatorRef.current.add_listener("emulator-started", () => {
+              console.log('Floppy Bird emulator started!');
+            });
+          } catch(e) {
+            setEmulatorStatus('ERROR: ' + e.message);
+          }
+        }
+      };
+      script.onerror = () => {
+        setEmulatorStatus('ERROR: Failed to load v86.js');
+      };
+      document.head.appendChild(script);
+    } else if (showWin95 && window.V86 && screenContainerRef.current && !emulatorRef.current) {
+      // v86 already loaded, just create the emulator instance
+      setEmulatorStatus('v86 already loaded, initializing...');
+      try {
+        emulatorRef.current = new window.V86({
+          wasm_path: "/v86/build/v86.wasm",
+          memory_size: 16 * 1024 * 1024,
+          vga_memory_size: 8 * 1024 * 1024,
+          screen_container: screenContainerRef.current,
+          bios: {
+            url: "/v86/bios/seabios.bin",
+          },
+          vga_bios: {
+            url: "/v86/bios/vgabios.bin",
+          },
+          fda: {
+            url: "/v86/images/floppybird.img",
+            async: false,
+          },
+          boot_order: 0x1,
+          autostart: true,
+          disable_keyboard: false,
+          disable_mouse: false,
+        });
+
+        setEmulatorStatus('Booting Floppy Bird from floppy disk...');
+
+        // Hide status message after 3 seconds so we can see the game
+        setTimeout(() => {
+          setEmulatorStatus('');
+        }, 3000);
+
+        emulatorRef.current.add_listener("emulator-started", () => {
+          console.log('Floppy Bird emulator started!');
+        });
+      } catch(e) {
+        setEmulatorStatus('ERROR: ' + e.message);
+      }
+    }
+  }, [showWin95]);
+
   // Handle key press or auto-exit after 3 seconds on 'Press any key to continue...' step
   React.useEffect(() => {
     if (showDosSpoof && dosStep === dosSteps.length - 1) {
@@ -78,9 +202,62 @@ function App() {
     }
   }, [showDosSpoof, dosStep]);
 
+  // Handle ESC key to exit Floppy Bird emulator
+  React.useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && showWin95) {
+        setShowWin95(false);
+      }
+    };
+    
+    window.addEventListener('keydown', handleEscape);
+    
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [showWin95]);
+
   if (page === 'support') return <Support />;
   return (
     <div className="picofloppy-main">
+      {/* Floppy Bird Emulator Fullscreen Overlay */}
+      {showWin95 && (
+        <div className="win95-overlay">
+          <div className="win95-header">
+            <div className="win95-title">
+              <strong>🐦 Floppy Bird</strong> - A bootable x86 Flappy Bird clone running in v86 emulator | Press any key to flap | Press ESC to exit
+            </div>
+            <button 
+              className="win95-close" 
+              onClick={() => setShowWin95(false)} 
+              title="Press ESC or click to exit"
+            >
+              ✕ Exit
+            </button>
+          </div>
+          {emulatorStatus && (
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              color: 'white',
+              fontSize: '20px',
+              fontFamily: 'monospace',
+              background: 'rgba(0,0,0,0.7)',
+              padding: '20px',
+              borderRadius: '8px',
+              zIndex: 10003
+            }}>
+              {emulatorStatus}
+            </div>
+          )}
+          <div ref={screenContainerRef} className="win95-iframe">
+            <div style={{whiteSpace: 'pre', font: '14px monospace', lineHeight: '14px'}}></div>
+            <canvas></canvas>
+          </div>
+        </div>
+      )}
       {/* Blue Screen of Death Easter Egg */}
       {showBSOD && (
         <div className="bsod-overlay" onClick={() => setShowBSOD(false)}>
@@ -125,7 +302,7 @@ A fatal exception 0E has occurred at 0028:C0011E36 in VXD VMM(01) +
         </div>
         <ul>
           <li><a href="#products">Trollducts</a></li>
-          <li><a href="#download" onClick={e => { e.preventDefault(); playFloppySound(); }}>Download FloppyOS 95</a></li>
+          <li><a href="#floppybird" onClick={e => { e.preventDefault(); setShowWin95(true); }}>Run Floppy Bird</a></li>
           <li><a href="#support" onClick={e => { e.preventDefault(); setPage('support'); }}>Support</a></li>
           <li><a href="#chkdsk" onClick={e => { e.preventDefault(); setShowDosSpoof(true); setDosStep(0); }}>CHKDSK</a></li>
           <li><a href="#bsod" onClick={e => { e.preventDefault(); setShowBSOD(true); }}>BSOD</a></li>
