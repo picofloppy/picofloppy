@@ -294,10 +294,10 @@ A fatal exception 0E has occurred at 0028:C0011E36 in VXD VMM(01) +
       )}
       <nav className="picofloppy-nav">
         <div className="picofloppy-logo">
-          <span className="logo-square red"></span>
-          <span className="logo-square green"></span>
-          <span className="logo-square blue"></span>
-          <span className="logo-square yellow"></span>
+          <span className="logo-floppy red"></span>
+          <span className="logo-floppy green"></span>
+          <span className="logo-floppy blue"></span>
+          <span className="logo-floppy yellow"></span>
           <span className="logo-text">picofloppy</span>
         </div>
         <ul>
