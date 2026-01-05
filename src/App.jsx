@@ -309,7 +309,7 @@ A fatal exception 0E has occurred at 0028:C0011E36 in VXD VMM(01) +
         </ul>
       </nav>
       <header className="picofloppy-hero">
-        <h1>Welcome to Picofloppy.com</h1>
+        <h1>Welcome to picofloppy.com</h1>
         <img src="/floppy.png" alt="Floppy Disk" style={{width: '120px'}} />
         <p>
           The only site where floppy disks are still cool.<br />
