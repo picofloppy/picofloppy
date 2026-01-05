@@ -469,6 +469,16 @@ body {
   font-size: 1em;
 }
 
+.picofloppy-footer a {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.picofloppy-footer a:hover {
+  color: #ffeb3b;
+}
+
 .picofloppy-support {
   background: #fff;
   padding: 3rem 2rem;

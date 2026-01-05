@@ -419,8 +419,9 @@ A fatal exception 0E has occurred at 0028:C0011E36 in VXD VMM(01) +
         </div>
       </section>
       <footer className="picofloppy-footer">
-        <p>© 2025 Picofloppy.<br /> Not affiliated with Microsoft or Macrohard, we are not not big or hard enough. <br />
+        <p>© {new Date().getFullYear()} Picofloppy.<br /> Not affiliated with Microsoft or Macrohard, we are not not big or hard enough. <br />
         All rights reserved to the Floppyverse.<br />
+        Contact: <a href="mailto:floppy@picofloppy.com">floppy@picofloppy.com</a><br />
         If you read this, you probably need a hobby.<br />
         Powered by 100% recycled memes.</p>
       </footer>
